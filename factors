@@ -1,37 +1,33 @@
 #!/usr/bin/python3
+def check_factor(my_list):
+    """check factor of number in a list"""
+    import sys
 
-def factorize(n: int) -> list[int]:
-    """
-    Factorize a number into its prime factors.
+    if len(my_list) == 0 or my_list is None:
+        print("An error occured")
+    for q in my_list:
+       i = int(q)
+       for j in range(2, sys.maxsize):
+           if i % j == 0:
+               print("{:d}={:d}*{:d}".format(i, int(i/j), j))
+               break
 
-    Args:
-        n: The number to factorize.
+def factoring_challenge():
+    """factor two numbers"""
+    import sys
 
-    Returns:
-        A list of the prime factors of n.
-    """
-
-    # Create a list of all the prime numbers up to the square root of n.
-    primes = []
-    for i in range(2, int(math.sqrt(n)) + 1):
-        is_prime = True
-        for j in range(2, i):
-            if i % j == 0:
-                is_prime = False
-                break
-        if is_prime:
-            primes.append(i)
-
-    # Loop through the list of primes, dividing n by each prime number.
-    # If n is divisible by the prime number, it is added to a list of factors.
-    factors = []
-    for prime in primes:
-        while n % prime == 0:
-            factors.append(prime)
-            n //= prime
-
-    # If n is not divisible by any prime numbers, it is added to the list of factors.
-    if n > 1:
-        factors.append(n)
-
-    return factors
+    lis = sys.argv
+    if len(lis) < 2:
+        print("Error!:<USAGE> ./factors filename")
+        exit(98)
+    f_name = ''
+    if len(lis) == 2:
+        f_name = lis[1]
+    if len(lis) == 3:
+        f_name = lis[2]
+    with open(f_name) as file_in:
+        lines = []
+        for line in file_in:
+            lines.append(line)
+    check_factor(lines)
+factoring_challenge()
