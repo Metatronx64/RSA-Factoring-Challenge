@@ -1,33 +1,35 @@
-#!/usr/bin/python3
+def factorize(n: int) -> list[int]:
+    """
+    Factorize a number into its prime factors.
 
-import sys
+    Args:
+        n: The number to factorize.
 
-def factorize_number(number):
+    Returns:
+        A list of the prime factors of n.
+    """
+
+    # Create a list of all the prime numbers up to the square root of n.
+    primes = []
+    for i in range(2, int(math.sqrt(n)) + 1):
+        is_prime = True
+        for j in range(2, i):
+            if i % j == 0:
+                is_prime = False
+                break
+        if is_prime:
+            primes.append(i)
+
+    # Loop through the list of primes, dividing n by each prime number.
+    # If n is divisible by the prime number, it is added to a list of factors.
     factors = []
-    for i in range(2, number):
-        if number % i == 0:
-            factors.append((i, number // i))
+    for prime in primes:
+        while n % prime == 0:
+            factors.append(prime)
+            n //= prime
+
+    # If n is not divisible by any prime numbers, it is added to the list of factors.
+    if n > 1:
+        factors.append(n)
+
     return factors
-
-def factorize_file(filename):
-    with open(filename, 'r') as file:
-        numbers = file.read().splitlines()
-    
-    factorizations = []
-    for number in numbers:
-        number = int(number)
-        factors = factorize_number(number)
-        for factor in factors:
-            factorizations.append(f"{number}={factor[0]}*{factor[1]}")
-    
-    for factorization in factorizations:
-        print(factorization)
-
-if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print("Usage: factors <file>")
-        sys.exit(1)
-    
-    filename = sys.argv[1]
-    factorize_file(filename)
-
